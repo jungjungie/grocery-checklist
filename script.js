@@ -31,11 +31,22 @@ let retrieveItems = () => {
             // Create a new delete button for each saved item
             let deleteBtn = document.createElement("button");
             deleteBtn.textContent = "x";
-            deleteBtn.setAttribute("class", "deleteBtns")
+            deleteBtn.setAttribute("class", "deleteBtns");
+            deleteBtn.setAttribute("data-id", storedItems.indexOf(item));
 
             // Append to the savedList div
             savedList.appendChild(groceryItem);
             groceryItem.appendChild(deleteBtn);
+
+            // When the delete button is clicked, remove the item from the storedItems array based on the matching data-id
+            deleteBtn.addEventListener("click", function () {
+                // console.log(deleteBtn.dataset.id);
+                storedItems.splice(deleteBtn.dataset.id, 1);
+                // console.log(storedItems);
+
+                groceryList = storedItems;
+                saveItem();
+            })
         })
     }
 }
@@ -99,8 +110,10 @@ retrieveItems();
 // Event listeners
 addBtn.addEventListener("click", addItem);
 groceryInput.addEventListener("keyup", addItemKeyUp);
+
 clearBtn.addEventListener("click", function () {
     // Clears the grocery list from localStorage and the savedList div
     localStorage.clear();
     savedList.textContent = "";
+    groceryList = [];
 })
