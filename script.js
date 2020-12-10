@@ -31,26 +31,42 @@ let retrieveItems = () => {
 // Function definition to add a new item to the grocery list when add button is clicked
 let addItem = event => {
     event.preventDefault();
-
-    // If the grocery item input is not an empty string, the item will be added to the groceryList array and then the input field is cleared
-    if (groceryInput.value !== "") {
-        groceryList.push(groceryInput.value.trim());
     
-        groceryInput.value = "";
-        saveItem();
+    let storedItems = JSON.parse(localStorage.getItem("groceries"));
+
+    // If there are items saved in localStorage, set the groceryList array equal to the saved list
+    if (storedItems !== null) {
+        console.log(storedItems);
+        groceryList = storedItems;
+
+        // If the grocery item input is not an empty string, the item will be added to the groceryList array and then the input field is cleared
+        if (groceryInput.value !== "") {
+            groceryList.push(groceryInput.value.trim());
+
+            groceryInput.value = "";
+            saveItem();
+        }
     }
     // console.log(groceryList);
 }
 
 // Function definition to add a new item to the grocery list when enter key is pressed
 let addItemKeyUp = event => {
-    // If the grocery item input is not an empty string, the item will be added to the groceryList array and then the input field is cleared
-    if (groceryInput.value !== "" && event.keyCode === 13) {
-        groceryList.push(groceryInput.value.trim());
-    
-        groceryInput.value = "";
-        saveItem();
+    let storedItems = JSON.parse(localStorage.getItem("groceries"));
+
+    // If there are items saved in localStorage, set the groceryList array equal to the saved list
+    if (storedItems !== null) {
+        groceryList = storedItems;
+
+        // If the grocery item input is not an empty string, the item will be added to the groceryList array and then the input field is cleared
+        if (groceryInput.value !== "" && event.keyCode === 13) {
+            groceryList.push(groceryInput.value.trim());
+
+            groceryInput.value = "";
+            saveItem();
+        }
     }
+
     // console.log(groceryList);
 }
 
