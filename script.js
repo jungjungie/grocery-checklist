@@ -8,7 +8,7 @@ let groceryList = [];
 let saveItem = () => {
     localStorage.setItem("groceries", JSON.stringify(groceryList));
 
-    retrieveItems();
+    // retrieveItems();
 }
 
 // Function to retrieve items from localStorage
@@ -31,7 +31,7 @@ let retrieveItems = () => {
             let deleteBtn = document.createElement("button");
             deleteBtn.textContent = "x";
             deleteBtn.setAttribute("class", "deleteBtns")
-            
+
             // Append to the savedList div
             savedList.appendChild(groceryItem);
             groceryItem.appendChild(deleteBtn);
@@ -45,36 +45,50 @@ let addItem = event => {
 
     let storedItems = JSON.parse(localStorage.getItem("groceries"));
 
-    // If there are items saved in localStorage, set the groceryList array equal to the saved list
-    if (storedItems !== null) {
-        console.log(storedItems);
-        groceryList = storedItems;
+    // If the grocery item input is not an empty string
+    if (groceryInput.value !== "") {
 
-        // If the grocery item input is not an empty string, the item will be added to the groceryList array and then the input field is cleared
-        if (groceryInput.value !== "") {
+        // If there are no saved items in localStorage, then add the new item to the groceryList array and clear the input box
+        if (storedItems === null) {
             groceryList.push(groceryInput.value.trim());
 
-            groceryInput.value = "";
+            saveItem();
+
+            // If there are saved items in localStorage, set the groceryList array to the saved items, then add the new item to the array and clear the input box
+        } else {
+            groceryList = storedItems;
+            groceryList.push(groceryInput.value.trim());
+
             saveItem();
         }
+
+        // Clear the input box
+        groceryInput.value = "";
     }
+
+    
 }
 
 // Function definition to add a new item to the grocery list when enter key is pressed
 let addItemKeyUp = event => {
     let storedItems = JSON.parse(localStorage.getItem("groceries"));
 
-    // If there are items saved in localStorage, set the groceryList array equal to the saved list
-    if (storedItems !== null) {
-        groceryList = storedItems;
-
-        // If the grocery item input is not an empty string, the item will be added to the groceryList array and then the input field is cleared
-        if (groceryInput.value !== "" && event.keyCode === 13) {
+    // If the grocery item input is not an empty string and key pressed is the 'Enter' key
+    if (groceryInput.value !== "" && event.keyCode === 13) {
+        // If localStorage is empty, then push the new item to the groceryList array
+        if (storedItems === null) {
             groceryList.push(groceryInput.value.trim());
 
-            groceryInput.value = "";
             saveItem();
+
+            // If localStorage is not empty, then set the groceryList array to the saved items and then push the new item to the array
+        } else {
+            groceryList = storedItems;
+            groceryList.push(groceryInput.value.trim());
         }
+
+        // Clear the input box
+        groceryInput.value = "";
     }
 }
 
