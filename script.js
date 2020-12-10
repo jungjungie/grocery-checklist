@@ -19,11 +19,22 @@ let retrieveItems = () => {
 
     savedList.textContent = "";
 
+    // If there are items stored in localStorage
     if (storedItems !== null) {
         storedItems.forEach(item => {
+            // Then create a new <p> element for each saved item
             let groceryItem = document.createElement("p");
             groceryItem.textContent = item;
+            groceryItem.setAttribute("class", "saved-items")
+
+            // Create a new delete button for each saved item
+            let deleteBtn = document.createElement("button");
+            deleteBtn.textContent = "x";
+            deleteBtn.setAttribute("class", "deleteBtns")
+            
+            // Append to the savedList div
             savedList.appendChild(groceryItem);
+            groceryItem.appendChild(deleteBtn);
         })
     }
 }
@@ -31,7 +42,7 @@ let retrieveItems = () => {
 // Function definition to add a new item to the grocery list when add button is clicked
 let addItem = event => {
     event.preventDefault();
-    
+
     let storedItems = JSON.parse(localStorage.getItem("groceries"));
 
     // If there are items saved in localStorage, set the groceryList array equal to the saved list
@@ -47,7 +58,6 @@ let addItem = event => {
             saveItem();
         }
     }
-    // console.log(groceryList);
 }
 
 // Function definition to add a new item to the grocery list when enter key is pressed
@@ -66,8 +76,6 @@ let addItemKeyUp = event => {
             saveItem();
         }
     }
-
-    // console.log(groceryList);
 }
 
 // Retrieve saved items from localStorage
@@ -76,4 +84,5 @@ retrieveItems();
 // When the "+" button is clicked, the addItem function will kick off
 addBtn.addEventListener("click", addItem);
 
+// When the enter key is pressed, the addItem function will kick off
 groceryInput.addEventListener("keyup", addItemKeyUp);

@@ -1,4 +1,5 @@
 /* General */
+
 * {
     margin: 0;
     padding: 0;
@@ -21,6 +22,7 @@ body {
 }
 
 /* Grocery form to add items */
+
 #grocery-form {
     padding: 20px;
     display: flex;
@@ -42,4 +44,15 @@ body {
     border-radius: 0px 4px 4px 0px;
     border: 1px solid black;
     border-left: none;
+}
+
+/* Saved grocery list */
+.saved-items {
+    padding: 5px 0 5px 200px;
+    text-align: left;
+}
+
+.deleteBtns {
+    padding: 1px 5px;
+    margin-left: 10px;
 }
