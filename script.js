@@ -1,11 +1,31 @@
 // Variables
 let addBtn = document.querySelector("#addBtn");
 let groceryInput = document.querySelector("#grocery-input");
+let savedList = document.querySelector("#savedList");
 let groceryList = [];
 
 // Function to save new item to localStorage
 let saveItem = () => {
     localStorage.setItem("groceries", JSON.stringify(groceryList));
+
+    retrieveItems();
+}
+
+// Function to retrieve items from localStorage
+let retrieveItems = () => {
+    let storedItems = JSON.parse(localStorage.getItem("groceries"));
+
+    console.log(storedItems);
+
+    savedList.textContent = "";
+
+    if (storedItems !== null) {
+        storedItems.forEach(item => {
+            let groceryItem = document.createElement("p");
+            groceryItem.textContent = item;
+            savedList.appendChild(groceryItem);
+        })
+    }
 }
 
 // Function definition to add a new item to the grocery list when add button is clicked
@@ -17,11 +37,9 @@ let addItem = event => {
         groceryList.push(groceryInput.value.trim());
     
         groceryInput.value = "";
+        saveItem();
     }
     // console.log(groceryList);
-    
-    // Save to localStorage
-    saveItem();
 }
 
 // Function definition to add a new item to the grocery list when enter key is pressed
@@ -31,12 +49,13 @@ let addItemKeyUp = event => {
         groceryList.push(groceryInput.value.trim());
     
         groceryInput.value = "";
+        saveItem();
     }
     // console.log(groceryList);
-
-    // Save to localStorage
-    saveItem();
 }
+
+// Retrieve saved items from localStorage
+retrieveItems();
 
 // When the "+" button is clicked, the addItem function will kick off
 addBtn.addEventListener("click", addItem);
