@@ -1,5 +1,6 @@
 // Variables
 let addBtn = document.querySelector("#addBtn");
+let clearBtn = document.querySelector("#clearBtn");
 let groceryInput = document.querySelector("#grocery-input");
 let savedList = document.querySelector("#savedList");
 let groceryList = [];
@@ -8,7 +9,7 @@ let groceryList = [];
 let saveItem = () => {
     localStorage.setItem("groceries", JSON.stringify(groceryList));
 
-    // retrieveItems();
+    retrieveItems();
 }
 
 // Function to retrieve items from localStorage
@@ -95,8 +96,11 @@ let addItemKeyUp = event => {
 // Retrieve saved items from localStorage
 retrieveItems();
 
-// When the "+" button is clicked, the addItem function will kick off
+// Event listeners
 addBtn.addEventListener("click", addItem);
-
-// When the enter key is pressed, the addItem function will kick off
 groceryInput.addEventListener("keyup", addItemKeyUp);
+clearBtn.addEventListener("click", function () {
+    // Clears the grocery list from localStorage and the savedList div
+    localStorage.clear();
+    savedList.textContent = "";
+})
