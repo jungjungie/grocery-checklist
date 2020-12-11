@@ -64,7 +64,7 @@ body {
     border: 1px solid #008248;
 }
 
-#grocery-form input:focus, #addBtn {
+#grocery-form input:focus, #addBtn, #clearBtn:focus {
     outline: none;
 }
 
