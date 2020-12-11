@@ -23,20 +23,22 @@ let retrieveItems = () => {
     // If there are items stored in localStorage
     if (storedItems !== null) {
         storedItems.forEach(item => {
-            // Then create a new <p> element for each saved item
+            let newDiv = document.createElement("div");
+            newDiv.setAttribute("class", "item-containers")
+
+            // Create a new <p> element for each saved item
             let groceryItem = document.createElement("p");
             groceryItem.textContent = item;
-            groceryItem.setAttribute("class", "saved-items")
 
             // Create a new delete button for each saved item
             let deleteBtn = document.createElement("button");
-            deleteBtn.textContent = "x";
             deleteBtn.setAttribute("class", "deleteBtns");
             deleteBtn.setAttribute("data-id", storedItems.indexOf(item));
 
             // Append to the savedList div
-            savedList.appendChild(groceryItem);
-            groceryItem.appendChild(deleteBtn);
+            savedList.appendChild(newDiv);
+            newDiv.appendChild(deleteBtn);
+            newDiv.appendChild(groceryItem);
 
             // When the delete button is clicked, remove the item from the storedItems array based on the matching data-id
             deleteBtn.addEventListener("click", function () {
@@ -51,7 +53,7 @@ let retrieveItems = () => {
     }
 }
 
-// Function definition to add a new item to the grocery list when add button is clicked
+// Function to add a new item to the grocery list when add button is clicked
 let addItem = event => {
     event.preventDefault();
 
